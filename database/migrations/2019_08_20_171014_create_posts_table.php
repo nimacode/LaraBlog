@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title',256);
             $table->text('content');
             $table->string('thumbnail');
-            $table->string('slug',256);
+            $table->string('slug',256)->unique();
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('commentCount')->default(0);
             $table->unsignedBigInteger('viewCount')->default(0);
