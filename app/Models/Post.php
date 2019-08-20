@@ -20,8 +20,6 @@ class Post extends Model
         'thumbnail',
         'slug',
         'userId',
-        'commentCount',
-        'viewCount',
         'status'
     ];
 }
