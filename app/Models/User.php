@@ -11,23 +11,10 @@ class User extends Authenticatable
 {
     use Notifiable,SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-
-    /*
-     *  protected $fillable = [
-     *      'firstName',
-     *      'lastName',
-     *      'role',
-     *      'email',
-     *      'userName',
-     *      'password',
-     *      'mobile'
-     *  ];
-     */
+    // Role Users
+    const ADMIN = 1;
+    const AUTHOR = 2;
+    const SUBSCRIBER = 3;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -41,4 +28,13 @@ class User extends Authenticatable
     protected $guarded = [
         'role'
     ];
+
+    public static function getRoles()
+    {
+        return [
+            self::ADMIN => "مدیر سیستم",
+            self::AUTHOR => "نویسنده",
+            self::SUBSCRIBER => "کاربر عادی"
+        ];
+    }
 }
