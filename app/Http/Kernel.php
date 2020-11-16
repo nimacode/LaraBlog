@@ -1,80 +1,90 @@
 <?php
 
-namespace App\Http;
+use GuzzleHttp;
+class Adsl extends Shahkar {
 
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
+    public static $createActualServiceRoute = "";
+    public static $createLegalServiceRoute = "";
 
-class Kernel extends HttpKernel
-{
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array
-     */
-    protected $middleware = [
-        \App\Http\Middleware\TrustProxies::class,
-        \App\Http\Middleware\CheckForMaintenanceMode::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-    ];
+    public static function createActualService($params) {
+        $data = json_encode($params);
 
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array
-     */
-    protected $middlewareGroups = [
-        'web' => [
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+        if ($params['nationality'] !== 'iranian') {
+            self::createActualService = ""; // TODO Non Iranian Route
+        }
 
-        'api' => [
-            'throttle:60,1',
-            'bindings',
-        ],
-    ];
+        $client = new GuzzleHttp\Client();
+        $res = $client->request('POST', self::createActualService, [
+                'auth' => "Basic" . $this->token;
+            
+        ]);
 
-    /**
-     * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-    ];
+        if ($res->getStatusCode() != 200) {
+            //TODO throw exception
+        }
+        //TODO return success alert
+    }
 
-    /**
-     * The priority-sorted list of middleware.
-     *
-     * This forces non-global middleware to always be in the given order.
-     *
-     * @var array
-     */
-    protected $middlewarePriority = [
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Http\Middleware\Authenticate::class,
-        \Illuminate\Session\Middleware\AuthenticateSession::class,
-        \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        \Illuminate\Auth\Middleware\Authorize::class,
-    ];
+
+    public static function createLegalService($params) {
+        $data = json_encode($params);
+
+        if ($params['nationality'] !== 'iranian') {
+            self::createLegalServiceRoute = ""; // TODO Non Iranian Route
+        }
+
+        $client = new GuzzleHttp\Client();
+        $res = $client->request('POST', self::createLegalServiceRoute, [
+            'auth' => $this->token;
+            
+        ]);
+        
+        if ($res->getStatusCode() != 200) {
+            //TODO throw exception
+        }
+        //TODO return success alert
+    }
+
+
+    public static function updateActualService($params) {
+        $data = json_encode($params);
+
+        if ($params['nationality'] !== 'iranian') {
+            self::createActualService = ""; // TODO Non Iranian Route
+        }
+
+        $client = new GuzzleHttp\Client();
+        $res = $client->request('POST', self::createActualService, [
+                'auth' => "Basic" . $this->token;
+            
+        ]);
+
+        if ($res->getStatusCode() != 200) {
+            //TODO throw exception
+        }
+        //TODO return success alert
+    }
+
+
+    public static function updateLegalService($params) {
+        $data = json_encode($params);
+
+        if ($params['nationality'] !== 'iranian') {
+            self::createLegalServiceRoute = ""; // TODO Non Iranian Route
+        }
+
+        $client = new GuzzleHttp\Client();
+        $res = $client->request('POST', self::createLegalServiceRoute, [
+            'auth' => $this->token;
+            
+        ]);
+        
+        if ($res->getStatusCode() != 200) {
+            //TODO throw exception
+        }
+        //TODO return success alert
+    }
+
+
+
 }
